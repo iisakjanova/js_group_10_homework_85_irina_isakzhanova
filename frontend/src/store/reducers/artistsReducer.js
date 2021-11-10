@@ -1,4 +1,8 @@
-import {GET_ARTISTS_FAILURE, GET_ARTISTS_REQUEST, GET_ARTISTS_SUCCESS} from "../actions/artistsActions";
+import {
+    GET_ARTISTS_FAILURE,
+    GET_ARTISTS_REQUEST,
+    GET_ARTISTS_SUCCESS
+} from "../actions/artistsActions";
 
 const initialState = {
     artists: null,
