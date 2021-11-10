@@ -1,4 +1,6 @@
 const express = require('express');
+const {ObjectId} = require("mongodb");
+
 const Track = require("../models/Track");
 
 const router = express.Router();
@@ -8,7 +10,7 @@ router.get('/', async (req, res) => {
         const query = {};
 
         if (req.query.album) {
-            query.album = req.query.album;
+            query.album = ObjectId(req.query.album);
         }
 
         let tracks;
@@ -28,7 +30,7 @@ router.get('/', async (req, res) => {
             return res.send(tracks);
         }
 
-        tracks = await Track.find(query).populate('album', 'title');
+        tracks = await Track.aggregate([{$match: query}]).sort({number: 1});
         res.send(tracks);
     } catch (e) {
         return res.sendStatus(500);
@@ -36,11 +38,12 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-    if (!req.body.title || !req.body.album) {
+    if (!req.body.number || !req.body.title || !req.body.album) {
         return res.status(400).send('Data is not valid');
     }
 
     const trackData = {
+        number: req.body.number,
         title: req.body.title,
         album: req.body.album,
         duration: req.body.duration || null,

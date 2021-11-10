@@ -2,6 +2,7 @@ const express = require('express');
 const multer = require('multer');
 const path = require('path');
 const {nanoid} = require('nanoid');
+const {ObjectId} = require("mongodb");
 
 const Album = require('../models/Album');
 const config = require('../config');
@@ -24,10 +25,10 @@ router.get('/', async (req, res) => {
         const query = {};
 
         if (req.query.artist) {
-           query.artist = req.query.artist;
+           query.artist = ObjectId(req.query.artist);
         }
 
-        const albums = await Album.find(query).populate('artist', 'title');
+        const albums = await Album.aggregate([{$match: query}]).sort({year: 1});
         res.send(albums);
     } catch (e) {
         res.sendStatus(500);
