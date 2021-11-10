@@ -1,8 +1,15 @@
+import {Route, Switch} from "react-router-dom";
+import {Typography} from "@material-ui/core";
+
+import ArtistsList from "./containers/ArtistsList/ArtistsList";
+
 const App = () => {
   return (
-      <div className="App">
-        Hello
-      </div>
+      <Switch>
+          <Route path="/" exact component={ArtistsList} />
+          <Route path="/artists" component={ArtistsList} />
+          <Route render={() => <Typography variant="h4">Not found</Typography>} />
+      </Switch>
   );
 };
 
