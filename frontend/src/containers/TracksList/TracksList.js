@@ -4,11 +4,14 @@ import {Grid, Typography} from "@material-ui/core";
 
 import {getTracks} from "../../store/actions/tracksActions";
 import Track from "../../components/Track/Track";
+import Preloader from "../../components/UI/Preloader/Preloader";
 
 const TracksList = ({match}) => {
     const dispatch = useDispatch();
     const id = match.params.album;
+
     const tracks = useSelector(state => state.tracks.tracks);
+    const loading = useSelector(state => state.tracks.fetchLoading);
 
     useEffect(() => {
         dispatch(getTracks(id));
@@ -32,19 +35,23 @@ const TracksList = ({match}) => {
     }
 
     return (
-        <Grid container direction="column" spacing={2}>
-            <Grid item>
-                <Typography variant="h4">
-                    {tracks && tracks.length > 0 ? tracks[0].album.artist.title : null}
-                </Typography>
+        <>
+            <Preloader loading={loading} />
+            <Grid container direction="column" spacing={2}>
+                <Grid item>
+                    <Typography variant="h4">
+                        {tracks && tracks.length > 0 ? tracks[0].album.artist.title : null}
+                    </Typography>
+                </Grid>
+                <Grid item>
+                    <Typography variant="h5">
+                        {tracks && tracks.length > 0 ? tracks[0].album.title : null}
+                    </Typography>
+                </Grid>
+                {tracksList}
             </Grid>
-            <Grid item>
-                <Typography variant="h5">
-                    {tracks && tracks.length > 0 ? tracks[0].album.title : null}
-                </Typography>
-            </Grid>
-            {tracksList}
-        </Grid>
+        </>
+
     );
 };
 

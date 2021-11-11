@@ -1,4 +1,5 @@
 import axiosApi from "../../axiosApi";
+import {toast} from "react-toastify";
 
 export const GET_ALBUMS_REQUEST = 'GET_ALBUMS_REQUEST';
 export const GET_ALBUMS_SUCCESS = 'GET_ALBUMS_SUCCESS';
@@ -16,6 +17,9 @@ export const getAlbums = (id) => {
             dispatch(getAlbumsSuccess(response.data));
         } catch (error) {
             dispatch(getAlbumsFailure(error.message));
+            toast.error('Could not fetch albums!', {
+                theme: 'colored'
+            });
         }
     };
 };

@@ -1,4 +1,5 @@
 import axiosApi from "../../axiosApi";
+import {toast} from "react-toastify";
 
 export const GET_ARTISTS_REQUEST = 'GET_ARTISTS_REQUEST';
 export const GET_ARTISTS_SUCCESS = 'GET_ARTISTS_SUCCESS';
@@ -16,6 +17,9 @@ export const getArtists = () => {
             dispatch(getArtistsSuccess(response.data));
         } catch (error) {
             dispatch(getArtistsFailure(error.message));
+            toast.error('Could not fetch artists!', {
+                theme: 'colored'
+            });
         }
     };
 };

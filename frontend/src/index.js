@@ -4,6 +4,8 @@ import {BrowserRouter} from "react-router-dom";
 import {Provider} from "react-redux";
 import {applyMiddleware, combineReducers, compose, createStore} from "redux";
 import thunk from "redux-thunk";
+import {ToastContainer} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 import App from './App';
 import artistsReducer from "./store/reducers/artistsReducer";
@@ -25,6 +27,7 @@ const store = createStore(rootReducer, composeEnhancers(
 const app = (
     <BrowserRouter>
         <Provider store={store}>
+            <ToastContainer/>
             <App />
         </Provider>
     </BrowserRouter>

@@ -4,10 +4,12 @@ import {Grid} from "@material-ui/core";
 
 import {getArtists} from "../../store/actions/artistsActions";
 import Artist from "../../components/Artist/Artist";
+import Preloader from "../../components/UI/Preloader/Preloader";
 
 const ArtistsList = () => {
     const dispatch = useDispatch();
     const artists = useSelector(state => state.artists.artists);
+    const loading = useSelector(state => state.artists.fetchLoading);
 
     useEffect(() => {
         dispatch(getArtists());
@@ -32,6 +34,7 @@ const ArtistsList = () => {
 
     return (
         <>
+            <Preloader loading={loading} />
             {artistsList}
         </>
     );
