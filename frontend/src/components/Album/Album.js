@@ -2,11 +2,13 @@ import {Link} from "react-router-dom";
 import {
     Card,
     CardActions,
+    CardContent,
     CardHeader,
     CardMedia,
     Grid,
     IconButton,
     makeStyles,
+    Typography,
 } from "@material-ui/core";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 
@@ -23,13 +25,22 @@ const useStyles = makeStyles({
     }
 });
 
-const Artist = ({title, id, image}) => {
+const Album = ({title, id, year, image}) => {
     const classes = useStyles();
 
     let cardImage = noImage;
+    let yearInfo = null;
 
     if (image) {
         cardImage = apiURL + '/uploads/' + image;
+    }
+
+    if (year) {
+        yearInfo = (
+            <Typography variant="subtitle1">
+                year: {year}
+            </Typography>
+        );
     }
 
     return (
@@ -41,8 +52,11 @@ const Artist = ({title, id, image}) => {
                     title={title}
                     className={classes.media}
                 />
+                <CardContent>
+                    {yearInfo}
+                </CardContent>
                 <CardActions>
-                    <IconButton component={Link} to={'/albums/' + id}>
+                    <IconButton component={Link} to={'/tracks/' + id}>
                         <ArrowForwardIcon />
                     </IconButton>
                 </CardActions>
@@ -51,4 +65,4 @@ const Artist = ({title, id, image}) => {
     );
 };
 
-export default Artist;
+export default Album;

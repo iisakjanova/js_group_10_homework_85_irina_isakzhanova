@@ -8,11 +8,11 @@ export const getAlbumsRequest = () => ({type: GET_ALBUMS_REQUEST});
 export const getAlbumsSuccess = products => ({type: GET_ALBUMS_SUCCESS, payload: products});
 export const getAlbumsFailure = error => ({type: GET_ALBUMS_FAILURE, payload: error});
 
-export const getAlbums = (params) => {
+export const getAlbums = (id) => {
     return async dispatch => {
         try {
             dispatch(getAlbumsRequest());
-            const response = await axiosApi.get('/albums' + params);
+            const response = await axiosApi.get('/albums?artist=' + id);
             dispatch(getAlbumsSuccess(response.data));
         } catch (error) {
             dispatch(getAlbumsFailure(error.message));

@@ -9,7 +9,7 @@ const App = () => {
       <Switch>
           <Route path="/" exact component={ArtistsList} />
           <Route path="/artists" component={ArtistsList} />
-          <Route path="/albums" component={AlbumsList} />
+          <Route path="/albums/:artist" component={AlbumsList} />
           <Route render={() => <Typography variant="h4">Not found</Typography>} />
       </Switch>
   );
