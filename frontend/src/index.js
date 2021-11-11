@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {CssBaseline} from "@material-ui/core";
 import {BrowserRouter} from "react-router-dom";
 import {Provider} from "react-redux";
 import {applyMiddleware, combineReducers, compose, createStore} from "redux";
@@ -26,7 +25,6 @@ const store = createStore(rootReducer, composeEnhancers(
 const app = (
     <BrowserRouter>
         <Provider store={store}>
-            <CssBaseline />
             <App />
         </Provider>
     </BrowserRouter>

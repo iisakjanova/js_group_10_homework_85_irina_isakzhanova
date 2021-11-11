@@ -29,6 +29,7 @@ const ArtistsList = () => {
             </Grid>
         );
     }
+
     return (
         <>
             {artistsList}

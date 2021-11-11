@@ -6,7 +6,6 @@ const {ObjectId} = require("mongodb");
 
 const Album = require('../models/Album');
 const config = require('../config');
-const Artist = require("../models/Artist");
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -30,7 +29,7 @@ router.get('/', async (req, res) => {
         }
 
         const albums = await Album.aggregate([{$match: query}])
-            .sort({year: -1});
+            .sort({year: 1});
         await Album.populate(albums, {path: "artist", select: "title"});
         res.send(albums);
     } catch (e) {

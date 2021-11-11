@@ -30,16 +30,17 @@ const TracksList = ({match}) => {
             </Grid>
         );
     }
+
     return (
         <Grid container direction="column" spacing={2}>
             <Grid item>
                 <Typography variant="h4">
-                    {tracks ? tracks[0].album.artist.title : null}
+                    {tracks && tracks.length > 0 ? tracks[0].album.artist.title : null}
                 </Typography>
             </Grid>
             <Grid item>
                 <Typography variant="h5">
-                    {tracks ? tracks[0].album.title : null}
+                    {tracks && tracks.length > 0 ? tracks[0].album.title : null}
                 </Typography>
             </Grid>
             {tracksList}
