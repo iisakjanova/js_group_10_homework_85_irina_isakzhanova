@@ -2,6 +2,7 @@ const express = require('express');
 const {ObjectId} = require("mongodb");
 
 const Track = require("../models/Track");
+const Album = require("../models/Album");
 
 const router = express.Router();
 
@@ -30,7 +31,15 @@ router.get('/', async (req, res) => {
             return res.send(tracks);
         }
 
-        tracks = await Track.aggregate([{$match: query}]).sort({number: 1});
+        tracks = await Track.aggregate([{$match: query}])
+            .sort({number: 1});
+        await Track.populate(tracks, {
+            path: 'album',
+            populate: {
+                path: 'artist',
+                select: 'title',
+            }
+        });
         res.send(tracks);
     } catch (e) {
         return res.sendStatus(500);

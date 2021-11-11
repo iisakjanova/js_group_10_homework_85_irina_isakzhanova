@@ -38,7 +38,7 @@ const AlbumsList = ({match}) => {
                     {albums ? albums[0].artist.title : null}
                 </Typography>
             </Grid>
-                {albumsList}
+            {albumsList}
         </Grid>
     );
 };
