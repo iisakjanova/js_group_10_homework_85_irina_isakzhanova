@@ -11,6 +11,8 @@ import {
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 
 import FormElement from "../../components/UI/FormElement/FormElement";
+import {useDispatch} from "react-redux";
+import {registerUser} from "../../store/actions/usersActions";
 
 const useStyles = makeStyles(theme => ({
     paper: {
@@ -33,6 +35,7 @@ const useStyles = makeStyles(theme => ({
 
 const Registration = () => {
     const classes = useStyles();
+    const dispatch = useDispatch();
 
     const [user, setUser] = useState({
         username: '',
@@ -46,7 +49,7 @@ const Registration = () => {
 
     const submitFormHandler = e => {
         e.preventDefault();
-        console.log(user);
+        dispatch(registerUser(user));
     };
 
     return (
