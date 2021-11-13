@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import {Link as RouterLink} from 'react-router-dom';
 import {
     Avatar,
-    Button,
     Container,
     Grid, Link,
     makeStyles,
@@ -11,8 +10,10 @@ import {
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 
 import FormElement from "../../components/UI/FormElement/FormElement";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {registerUser} from "../../store/actions/usersActions";
+import ButtonWithProgress from "../../components/UI/ButtonWithProgress/ButtonWithProgress";
+import {Alert} from "@material-ui/lab";
 
 const useStyles = makeStyles(theme => ({
     paper: {
@@ -31,11 +32,17 @@ const useStyles = makeStyles(theme => ({
     submit: {
         margin: theme.spacing(3, 0, 2),
     },
+    alert: {
+        marginTop: theme.spacing(3),
+        width: "100%",
+    },
 }));
 
 const Registration = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
+    const error = useSelector(state => state.users.registerError);
+    const loading = useSelector(state => state.users.registerLoading);
 
     const [user, setUser] = useState({
         username: '',
@@ -52,6 +59,14 @@ const Registration = () => {
         dispatch(registerUser(user));
     };
 
+    const getFieldError = fieldName => {
+        try {
+            return error.errors[fieldName].message;
+        } catch (e) {
+            return undefined;
+        }
+    };
+
     return (
         <Container component="section" maxWidth="xs">
             <div className={classes.paper}>
@@ -61,6 +76,12 @@ const Registration = () => {
                 <Typography component="h1" variant="h6">
                     Sign up
                 </Typography>
+                {
+                    error?.global &&
+                    <Alert severity="error" className={classes.alert}>
+                        {error.global}
+                    </Alert>
+                }
                 <Grid
                     component="form"
                     container
@@ -75,6 +96,7 @@ const Registration = () => {
                         name="username"
                         value={user.username}
                         onChange={inputChangeHandler}
+                        error={getFieldError('username')}
                     />
                     <FormElement
                         type="password"
@@ -83,17 +105,20 @@ const Registration = () => {
                         name="password"
                         value={user.password}
                         onChange={inputChangeHandler}
+                        error={getFieldError('password')}
                     />
                     <Grid item xs={12}>
-                        <Button
+                        <ButtonWithProgress
                             type="submit"
                             fullWidth
                             variant="contained"
                             color="primary"
                             className={classes.submit}
+                            loading={loading}
+                            disabled={loading}
                         >
                             Sign up
-                        </Button>
+                        </ButtonWithProgress>
                     </Grid>
                     <Grid item container justifyContent="flex-end">
                         <Link component={RouterLink} variant="body2" to="/login">
