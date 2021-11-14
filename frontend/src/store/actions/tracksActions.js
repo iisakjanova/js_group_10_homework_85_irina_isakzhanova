@@ -10,16 +10,27 @@ export const getTracksSuccess = products => ({type: GET_TRACKS_SUCCESS, payload:
 export const getTracksFailure = error => ({type: GET_TRACKS_FAILURE, payload: error});
 
 export const getTracks = (id) => {
-    return async dispatch => {
+    return async (dispatch, getState) => {
         try {
+            const headers = {
+                'Authorization': getState().users.user && getState().users.user.token
+            };
+
             dispatch(getTracksRequest());
-            const response = await axiosApi.get('/tracks?album=' + id);
+            const response = await axiosApi.get('/tracks?album=' + id, {headers});
             dispatch(getTracksSuccess(response.data));
         } catch (error) {
             dispatch(getTracksFailure(error.message));
-            toast.error('Could not fetch tracks!', {
-                theme: 'colored'
-            });
+
+            if (error.response.status === 401) {
+                toast.warning('Login, please!');
+            } else {
+                toast.error('Could not fetch tracks!', {
+                    theme: 'colored'
+                });
+            }
+
+
         }
     };
 };

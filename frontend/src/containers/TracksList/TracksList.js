@@ -1,5 +1,6 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
+import {Redirect} from "react-router-dom";
 import {Grid, Typography} from "@material-ui/core";
 
 import {getTracks} from "../../store/actions/tracksActions";
@@ -12,10 +13,15 @@ const TracksList = ({match}) => {
 
     const tracks = useSelector(state => state.tracks.tracks);
     const loading = useSelector(state => state.tracks.fetchLoading);
+    const user = useSelector(state => state.users.user);
 
     useEffect(() => {
         dispatch(getTracks(id));
     }, [dispatch, id]);
+
+    if (!user) {
+        return <Redirect to="/login"/>
+    }
 
     let tracksList = null;
 

@@ -2,10 +2,11 @@ const express = require('express');
 const {ObjectId} = require("mongodb");
 
 const Track = require("../models/Track");
+const auth = require("../middleware/auth");
 
 const router = express.Router();
 
-router.get('/', async (req, res) => {
+router.get('/', auth, async (req, res) => {
     try {
         const query = {};
 
