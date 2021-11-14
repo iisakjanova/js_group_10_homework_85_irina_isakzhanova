@@ -9,12 +9,12 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const Track = ({number, title, duration}) => {
+const Track = ({number, title, duration, onClick}) => {
     const classes = useStyles();
 
     return (
         <Grid item>
-            <Paper className={classes.root}>
+            <Paper className={classes.root} onClick={onClick}>
                 <Grid container direction="row" alignItems="center" spacing={3}>
                     <Grid item>
                         <Typography variant="subtitle1">{number}</Typography>

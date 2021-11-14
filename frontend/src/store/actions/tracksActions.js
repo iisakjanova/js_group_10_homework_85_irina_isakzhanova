@@ -6,7 +6,7 @@ export const GET_TRACKS_SUCCESS = 'GET_TRACKS_SUCCESS';
 export const GET_TRACKS_FAILURE = 'GET_TRACKS_FAILURE';
 
 export const getTracksRequest = () => ({type: GET_TRACKS_REQUEST});
-export const getTracksSuccess = products => ({type: GET_TRACKS_SUCCESS, payload: products});
+export const getTracksSuccess = tracks => ({type: GET_TRACKS_SUCCESS, payload: tracks});
 export const getTracksFailure = error => ({type: GET_TRACKS_FAILURE, payload: error});
 
 export const getTracks = (id) => {

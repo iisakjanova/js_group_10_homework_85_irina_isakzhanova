@@ -6,6 +6,7 @@ import {Grid, Typography} from "@material-ui/core";
 import {getTracks} from "../../store/actions/tracksActions";
 import Track from "../../components/Track/Track";
 import Preloader from "../../components/UI/Preloader/Preloader";
+import {addTrackToTrackHistory} from "../../store/actions/trackHistoryActions";
 
 const TracksList = ({match}) => {
     const dispatch = useDispatch();
@@ -23,6 +24,10 @@ const TracksList = ({match}) => {
         return <Redirect to="/login"/>
     }
 
+    const handleClickTrack = (id) => {
+        dispatch(addTrackToTrackHistory(id));
+    };
+
     let tracksList = null;
 
     if (tracks) {
@@ -34,6 +39,7 @@ const TracksList = ({match}) => {
                         title={track.title}
                         number={track.number}
                         duration={track.duration}
+                        onClick={() => handleClickTrack(track._id)}
                     />
                 ))}
             </Grid>
