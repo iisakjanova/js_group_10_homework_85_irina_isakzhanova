@@ -1,9 +1,10 @@
 import React from 'react';
-import {AppBar, Button, Grid, makeStyles, Toolbar, Typography} from "@material-ui/core";
 import {Link} from "react-router-dom";
+import {useSelector} from "react-redux";
+import {AppBar, Button, Grid, makeStyles, Toolbar, Typography} from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
-    mainLink: {
+    link: {
         color: 'inherit',
         textDecoration: 'none',
         '&:hover': {
@@ -17,6 +18,7 @@ const useStyles = makeStyles(theme => ({
 
 const AppToolbar = () => {
     const classes = useStyles();
+    const user = useSelector(state => state.users.user);
 
     return (
         <>
@@ -25,12 +27,18 @@ const AppToolbar = () => {
                     <Grid container alignItems="center" justifyContent="space-between">
                         <Grid item>
                             <Typography variant="h6">
-                                <Link to="/" className={classes.mainLink}>Music App</Link>
+                                <Link to="/" className={classes.link}>Music App</Link>
                             </Typography>
                         </Grid>
                         <Grid item>
-                            <Button component={Link} to="/register" color="inherit">Sign up</Button>
-                            <Button component={Link} to="/login" color="inherit">Sign in</Button>
+                            {user ? (
+                                <Link to="/track_history" className={classes.link}>Track History</Link>
+                            ) : (
+                                <>
+                                    <Button component={Link} to="/register" color="inherit">Sign up</Button>
+                                    <Button component={Link} to="/login" color="inherit">Sign in</Button>
+                                </>
+                            )}
                         </Grid>
                     </Grid>
                 </Toolbar>

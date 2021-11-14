@@ -7,6 +7,7 @@ import TracksList from "./containers/TracksList/TracksList";
 import Layout from "./components/UI/Layout/Layout";
 import Registration from "./containers/Registration/Registration";
 import Login from "./containers/Login/Login";
+import TrackHistoryPage from "./containers/TrackHistory/TrackHistoryPage";
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
               <Route path="/tracks/:album" component={TracksList} />
               <Route path="/register" component={Registration}/>
               <Route path="/login" component={Login}/>
+              <Route path="/track_history" component={TrackHistoryPage}/>
               <Route render={() => <Typography variant="h4">Not found</Typography>} />
           </Switch>
       </Layout>

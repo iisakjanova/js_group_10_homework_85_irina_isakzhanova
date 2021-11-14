@@ -1,30 +1,12 @@
 const express = require('express');
+const {ObjectId} = require("mongodb");
 
-const User = require('../models/User');
 const TrackHistory = require("../models/TrackHistory");
 const auth = require("../middleware/auth");
 
 const router = express.Router();
 
 router.post('/', auth, async (req, res) => {
-    // const token = req.get('Authorization');
-    //
-    // if (!token) {
-    //     return res.status(401).send({error: 'No token present'});
-    // }
-    //
-    // let user;
-    //
-    // try {
-    //     user = await User.findOne({token});
-    // } catch (e) {
-    //     return res.status(500).send(e);
-    // }
-    //
-    // if (!user) {
-    //     return res.status(401).send({error: 'Wrong token'});
-    // }
-
     if (!req.body.track) {
         return res.status(400).send('Data is not valid');
     }
@@ -44,5 +26,29 @@ router.post('/', auth, async (req, res) => {
         return res.status(400).send(e);
     }
 });
+
+router.get('/', auth, async (req, res) => {
+    try {
+        const id = ObjectId(req.user._id);
+
+        const trackHistory = await TrackHistory.aggregate([{$match: {user: id}}])
+            .sort({datetime: -1});
+        await TrackHistory.populate(trackHistory, {
+            path: "track",
+            select: "title album",
+            populate: {
+                path: "album",
+                populate: {
+                    path: "artist",
+                    select: "title"
+                }
+            }
+        });
+        res.send(trackHistory);
+    } catch (e) {
+        res.sendStatus(500);
+    }
+});
+
 
 module.exports = router;
