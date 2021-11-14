@@ -8,11 +8,11 @@ import {
     makeStyles,
     Typography
 } from "@material-ui/core";
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import LockOpenOutlinedIcon from '@material-ui/icons/LockOpenOutlined';
 import {Alert} from "@material-ui/lab";
 
 import FormElement from "../../components/UI/FormElement/FormElement";
-import {registerUser} from "../../store/actions/usersActions";
+import {loginUser} from "../../store/actions/usersActions";
 import ButtonWithProgress from "../../components/UI/ButtonWithProgress/ButtonWithProgress";
 
 const useStyles = makeStyles(theme => ({
@@ -38,11 +38,11 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const Registration = () => {
+const Login = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
-    const error = useSelector(state => state.users.registerError);
-    const loading = useSelector(state => state.users.registerLoading);
+    const error = useSelector(state => state.users.loginError);
+    const loading = useSelector(state => state.users.loginLoading);
 
     const [user, setUser] = useState({
         username: '',
@@ -56,30 +56,22 @@ const Registration = () => {
 
     const submitFormHandler = e => {
         e.preventDefault();
-        dispatch(registerUser({...user}));
-    };
-
-    const getFieldError = fieldName => {
-        try {
-            return error.errors[fieldName].message;
-        } catch (e) {
-            return undefined;
-        }
+        dispatch(loginUser({...user}));
     };
 
     return (
         <Container component="section" maxWidth="xs">
             <div className={classes.paper}>
                 <Avatar className={classes.avatar}>
-                    <LockOutlinedIcon/>
+                    <LockOpenOutlinedIcon/>
                 </Avatar>
                 <Typography component="h1" variant="h6">
-                    Sign up
+                    Sign in
                 </Typography>
                 {
-                    error?.global &&
+                    error &&
                     <Alert severity="error" className={classes.alert}>
-                        {error.global}
+                        {error.message || error.global}
                     </Alert>
                 }
                 <Grid
@@ -96,7 +88,6 @@ const Registration = () => {
                         name="username"
                         value={user.username}
                         onChange={inputChangeHandler}
-                        error={getFieldError('username')}
                     />
                     <FormElement
                         type="password"
@@ -105,7 +96,6 @@ const Registration = () => {
                         name="password"
                         value={user.password}
                         onChange={inputChangeHandler}
-                        error={getFieldError('password')}
                     />
                     <Grid item xs={12}>
                         <ButtonWithProgress
@@ -117,12 +107,12 @@ const Registration = () => {
                             loading={loading}
                             disabled={loading}
                         >
-                            Sign up
+                            Sign in
                         </ButtonWithProgress>
                     </Grid>
                     <Grid item container justifyContent="flex-end">
-                        <Link component={RouterLink} variant="body2" to="/login">
-                            Already have an account? Sign in
+                        <Link component={RouterLink} variant="body2" to="/register">
+                            Or sign up
                         </Link>
                     </Grid>
                 </Grid>
@@ -131,4 +121,4 @@ const Registration = () => {
     );
 };
 
-export default Registration;
+export default Login;

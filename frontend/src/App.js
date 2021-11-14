@@ -6,6 +6,7 @@ import AlbumsList from "./containers/AlbumsList/AlbumsList";
 import TracksList from "./containers/TracksList/TracksList";
 import Layout from "./components/UI/Layout/Layout";
 import Registration from "./containers/Registration/Registration";
+import Login from "./containers/Login/Login";
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
               <Route path="/albums/:artist" component={AlbumsList} />
               <Route path="/tracks/:album" component={TracksList} />
               <Route path="/register" component={Registration}/>
+              <Route path="/login" component={Login}/>
               <Route render={() => <Typography variant="h4">Not found</Typography>} />
           </Switch>
       </Layout>

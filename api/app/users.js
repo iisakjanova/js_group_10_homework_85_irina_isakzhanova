@@ -47,8 +47,8 @@ router.post('/sessions', async (req, res) => {
 
     try {
         user.generateToken();
-        await user.save();
-        res.send({token: user.token});
+        await user.save({validateBeforeSave: false});
+        res.send({message: 'Login successful!', user});
     } catch (e) {
         return res.status(500).send(e);
     }
