@@ -31,7 +31,7 @@ const usersReducer = (state = initialState, action) => {
         case LOGIN_USER_FAILURE:
             return {...state, loginLoading: false, loginError: action.payload};
         case CLEAN_UP_ERROR:
-            return {...state, loginError: null};
+            return {...state, loginError: null, registerError: null};
         default:
             return state;
     }

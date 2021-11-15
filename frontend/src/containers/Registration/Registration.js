@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Link as RouterLink} from 'react-router-dom';
 import {useDispatch, useSelector} from "react-redux";
 import {
@@ -12,7 +12,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import {Alert} from "@material-ui/lab";
 
 import FormElement from "../../components/UI/FormElement/FormElement";
-import {registerUser} from "../../store/actions/usersActions";
+import {cleanUpError, registerUser} from "../../store/actions/usersActions";
 import ButtonWithProgress from "../../components/UI/ButtonWithProgress/ButtonWithProgress";
 
 const useStyles = makeStyles(theme => ({
@@ -48,6 +48,10 @@ const Registration = () => {
         username: '',
         password: '',
     });
+
+    useEffect(() => {
+        dispatch(cleanUpError());
+    }, [dispatch]);
 
     const inputChangeHandler = e => {
         const {name, value} = e.target;
