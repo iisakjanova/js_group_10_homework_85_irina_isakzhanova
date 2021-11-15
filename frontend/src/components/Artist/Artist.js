@@ -42,7 +42,7 @@ const Artist = ({title, id, image}) => {
                     className={classes.media}
                 />
                 <CardActions>
-                    <IconButton component={Link} to={'/albums/' + id}>
+                    <IconButton component={Link} to={'/albums?artist=' + id}>
                         <ArrowForwardIcon />
                     </IconButton>
                 </CardActions>

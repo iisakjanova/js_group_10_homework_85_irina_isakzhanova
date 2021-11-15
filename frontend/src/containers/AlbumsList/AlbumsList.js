@@ -5,10 +5,18 @@ import {Grid, Typography} from "@material-ui/core";
 import {getAlbums} from "../../store/actions/albumsActions";
 import Album from "../../components/Album/Album";
 import Preloader from "../../components/UI/Preloader/Preloader";
+import {useLocation} from "react-router-dom";
 
-const AlbumsList = ({match}) => {
+const useQuery = () => {
+    const {search} = useLocation();
+    return React.useMemo(() => new URLSearchParams(search), [search]);
+};
+
+const AlbumsList = () => {
     const dispatch = useDispatch();
-    const id = match.params.artist;
+
+    let query = useQuery();
+    const id = query.get('artist');
 
     const albums = useSelector(state => state.albums.albums);
     const loading = useSelector(state => state.albums.fetchLoading);

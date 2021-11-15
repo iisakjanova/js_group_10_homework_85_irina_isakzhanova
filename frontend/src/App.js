@@ -15,8 +15,8 @@ const App = () => {
           <Switch>
               <Route path="/" exact component={ArtistsList} />
               <Route path="/artists" component={ArtistsList} />
-              <Route path="/albums/:artist" component={AlbumsList} />
-              <Route path="/tracks/:album" component={TracksList} />
+              <Route path="/albums" component={AlbumsList} />
+              <Route path="/tracks" component={TracksList} />
               <Route path="/register" component={Registration}/>
               <Route path="/login" component={Login}/>
               <Route path="/track_history" component={TrackHistoryPage}/>

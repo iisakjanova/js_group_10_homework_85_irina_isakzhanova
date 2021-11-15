@@ -56,7 +56,7 @@ const Album = ({title, id, year, image}) => {
                     {yearInfo}
                 </CardContent>
                 <CardActions>
-                    <IconButton component={Link} to={'/tracks/' + id}>
+                    <IconButton component={Link} to={'/tracks?album=' + id}>
                         <ArrowForwardIcon />
                     </IconButton>
                 </CardActions>

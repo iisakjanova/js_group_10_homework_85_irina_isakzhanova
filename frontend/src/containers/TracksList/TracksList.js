@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {Redirect} from "react-router-dom";
+import {Redirect, useLocation} from "react-router-dom";
 import {Grid, Typography} from "@material-ui/core";
 
 import {getTracks} from "../../store/actions/tracksActions";
@@ -8,9 +8,16 @@ import Track from "../../components/Track/Track";
 import Preloader from "../../components/UI/Preloader/Preloader";
 import {addTrackToTrackHistory} from "../../store/actions/trackHistoryActions";
 
-const TracksList = ({match, history}) => {
+const useQuery = () => {
+    const {search} = useLocation();
+    return React.useMemo(() => new URLSearchParams(search), [search]);
+};
+
+const TracksList = ({history}) => {
     const dispatch = useDispatch();
-    const id = match.params.album;
+
+    let query = useQuery();
+    const id = query.get('album');
 
     const tracks = useSelector(state => state.tracks.tracks);
     const loading = useSelector(state => state.tracks.fetchLoading);
@@ -21,9 +28,11 @@ const TracksList = ({match, history}) => {
     }, [dispatch, id]);
 
     if (!user) {
+        const path = history.location.pathname + history.location.search;
+
         return <Redirect to={{
             pathname: "/login",
-            state: {nextpath: history.location.pathname}
+            state: {nextpath: path}
         }} />
     }
 
