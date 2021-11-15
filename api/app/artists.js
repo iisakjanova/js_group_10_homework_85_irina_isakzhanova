@@ -24,7 +24,7 @@ router.get('/', async (req, res) => {
         const artists = await Artist.find();
         res.send(artists);
     } catch (e) {
-        res.sendStatus(500);
+        res.status(500).send({message: e.message});
     }
 });
 
@@ -52,7 +52,7 @@ router.post('/', upload.single('image'), async (req, res) => {
             res.status(400).send('Duplicate key');
         }
 
-        res.status(400).send(e);
+        res.status(400).send({message: e.message});
     }
 });
 

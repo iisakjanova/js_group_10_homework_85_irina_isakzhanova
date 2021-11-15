@@ -42,7 +42,7 @@ router.get('/', auth, async (req, res) => {
         });
         res.send(tracks);
     } catch (e) {
-        return res.sendStatus(500);
+        res.status(500).send({message: e.message});
     }
 });
 

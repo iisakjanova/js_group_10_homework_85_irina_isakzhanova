@@ -16,10 +16,17 @@ export const getArtists = () => {
             const response = await axiosApi.get('/artists');
             dispatch(getArtistsSuccess(response.data));
         } catch (error) {
-            dispatch(getArtistsFailure(error.message));
-            toast.error('Could not fetch artists!', {
-                theme: 'colored'
-            });
+            if (error.response && error.response.data) {
+                dispatch(getArtistsFailure(error.response?.data.message));
+                toast.error('Could not fetch artists!', {
+                    theme: 'colored'
+                });
+            } else {
+                dispatch(getArtistsFailure('No internet!'));
+                toast.error('No internet', {
+                    theme: 'colored'
+                });
+            }
         }
     };
 };

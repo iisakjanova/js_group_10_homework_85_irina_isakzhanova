@@ -16,10 +16,17 @@ export const getAlbums = (id) => {
             const response = await axiosApi.get('/albums?artist=' + id);
             dispatch(getAlbumsSuccess(response.data));
         } catch (error) {
-            dispatch(getAlbumsFailure(error.message));
-            toast.error('Could not fetch albums!', {
-                theme: 'colored'
-            });
+            if (error.response && error.response.data) {
+                dispatch(getAlbumsFailure(error.response?.data.message));
+                toast.error('Could not fetch albums!', {
+                    theme: 'colored'
+                });
+            } else {
+                dispatch(getAlbumsFailure('No internet!'));
+                toast.error('No internet!', {
+                    theme: 'colored'
+                });
+            }
         }
     };
 };

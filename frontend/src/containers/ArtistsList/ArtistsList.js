@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {Grid} from "@material-ui/core";
+import {Grid, Typography} from "@material-ui/core";
 
 import {getArtists} from "../../store/actions/artistsActions";
 import Artist from "../../components/Artist/Artist";
@@ -17,7 +17,7 @@ const ArtistsList = () => {
 
     let artistsList = null;
 
-    if (artists) {
+    if (artists && artists.length > 0) {
         artistsList = (
             <Grid item container direction="row" spacing={3}>
                 {artists.map(artist => (
@@ -35,7 +35,7 @@ const ArtistsList = () => {
     return (
         <>
             <Preloader loading={loading} />
-            {artistsList}
+            {artistsList || <Typography variant="h5">No artists yet</Typography>}
         </>
     );
 };

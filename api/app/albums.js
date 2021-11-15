@@ -33,7 +33,7 @@ router.get('/', async (req, res) => {
         await Album.populate(albums, {path: "artist", select: "title"});
         res.send(albums);
     } catch (e) {
-        res.sendStatus(500);
+        res.status(500).send({message: e.message});
     }
 });
 
@@ -46,8 +46,8 @@ router.get('/:id', async (req, res) => {
         } else {
             res.status(404).send({error: 'Album is not found'});
         }
-    } catch {
-        res.sendStatus(500);
+    } catch (e) {
+        res.status(500).send({message: e.message});
     }
 });
 
@@ -76,7 +76,7 @@ router.post('/', upload.single('image'), async (req, res) => {
             res.status(400).send('Duplicate key');
         }
 
-        res.status(400).send(e);
+        res.status(400).send({message: e.message});
     }
 });
 

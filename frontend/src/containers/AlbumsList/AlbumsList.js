@@ -19,7 +19,7 @@ const AlbumsList = ({match}) => {
 
     let albumsList = null;
 
-    if (albums) {
+    if (albums && albums.length > 0) {
         albumsList = (
             <Grid item container direction="row" spacing={3}>
                 {albums.map(album => (
@@ -44,7 +44,7 @@ const AlbumsList = ({match}) => {
                         {albums && albums.length > 0 ? albums[0].artist.title : null}
                     </Typography>
                 </Grid>
-                {albumsList}
+                {albumsList || <Typography variant="h5">No albums yet</Typography>}
             </Grid>
         </>
     );

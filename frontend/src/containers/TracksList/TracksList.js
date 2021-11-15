@@ -33,7 +33,7 @@ const TracksList = ({match, history}) => {
 
     let tracksList = null;
 
-    if (tracks) {
+    if (tracks && tracks.length > 0) {
         tracksList = (
             <Grid item container direction="column" spacing={3}>
                 {tracks.map(track => (
@@ -63,10 +63,9 @@ const TracksList = ({match, history}) => {
                         {tracks && tracks.length > 0 ? tracks[0].album.title : null}
                     </Typography>
                 </Grid>
-                {tracksList}
+                {tracksList || <Typography variant="h5">No tracks yet</Typography>}
             </Grid>
         </>
-
     );
 };
 

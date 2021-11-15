@@ -46,7 +46,7 @@ export const getTrackHistory = () => {
             const response = await axiosApi.get('/track_history', {headers});
             dispatch(getTrackHistorySuccess(response.data));
         } catch (error) {
-            dispatch(getTrackHistoryFailure(error.message));
+            dispatch(getTrackHistoryFailure(error.response.data.message));
             if (error.response.status === 401) {
                 toast.warning('You need login!');
             } else {

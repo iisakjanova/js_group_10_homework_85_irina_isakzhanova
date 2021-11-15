@@ -20,7 +20,7 @@ export const getTracks = (id) => {
             const response = await axiosApi.get('/tracks?album=' + id, {headers});
             dispatch(getTracksSuccess(response.data));
         } catch (error) {
-            dispatch(getTracksFailure(error.message));
+            dispatch(getTracksFailure(error.response.data.message));
 
             if (error.response.status === 401) {
                 toast.warning('Login, please!');
