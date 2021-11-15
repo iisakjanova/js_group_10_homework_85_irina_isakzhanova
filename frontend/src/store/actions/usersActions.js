@@ -10,6 +10,8 @@ export const LOGIN_USER_REQUEST = 'LOGIN_USER_REQUEST';
 export const LOGIN_USER_SUCCESS = 'LOGIN_USER_SUCCESS';
 export const LOGIN_USER_FAILURE = 'LOGIN_USER_FAILURE';
 
+export const CLEAN_UP_ERROR = 'CLEAN_UP_ERROR';
+
 export const registerUserRequest = () => ({type: REGISTER_USER_REQUEST});
 export const registerUserSuccess = user => ({type: REGISTER_USER_SUCCESS, payload: user});
 export const registerUserFailure = error => ({type: REGISTER_USER_FAILURE, payload: error});
@@ -17,6 +19,8 @@ export const registerUserFailure = error => ({type: REGISTER_USER_FAILURE, paylo
 export const loginUserRequest = () => ({type: LOGIN_USER_REQUEST});
 export const loginUserSuccess = user => ({type: LOGIN_USER_SUCCESS, payload: user});
 export const loginUserFailure = error => ({type: LOGIN_USER_FAILURE, payload: error});
+
+export const cleanUpError = () => ({type: CLEAN_UP_ERROR});
 
 export const registerUser = userData => {
     return async dispatch => {
@@ -40,13 +44,19 @@ export const registerUser = userData => {
     };
 };
 
-export const loginUser = userData => {
+export const loginUser = (userData, historyLocationState) => {
     return async dispatch => {
         try {
             dispatch(loginUserRequest());
             const response = await axiosApi.post('/users/sessions', userData);
             dispatch(loginUserSuccess(response.data.user));
-            dispatch(historyReplace('/'));
+
+            if (historyLocationState && historyLocationState.nextpath) {
+                dispatch(historyReplace(historyLocationState.nextpath));
+            } else {
+                dispatch(historyReplace('/'));
+            }
+
             toast.success('Login successful');
         } catch (error) {
             if (error.response && error.response.data) {

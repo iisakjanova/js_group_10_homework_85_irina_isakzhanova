@@ -7,7 +7,7 @@ import {
 const initialState = {
     albums: null,
     fetchError: null,
-    fetchLoading: null,
+    fetchLoading: false,
 };
 
 const albumsReducer = (state = initialState, action) => {
@@ -15,7 +15,7 @@ const albumsReducer = (state = initialState, action) => {
         case GET_ALBUMS_REQUEST:
             return {...state, fetchLoading: true};
         case GET_ALBUMS_SUCCESS: {
-            return {...state, fetchLoading: false, albums: action.payload};
+            return {...state, fetchLoading: false, fetchError: null, albums: action.payload};
         }
         case GET_ALBUMS_FAILURE:
             return {...state, fetchLoading: false, fetchError: action.payload};

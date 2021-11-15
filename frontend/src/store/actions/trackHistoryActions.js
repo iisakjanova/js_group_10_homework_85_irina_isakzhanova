@@ -1,6 +1,5 @@
 import axiosApi from "../../axiosApi";
 import {toast} from "react-toastify";
-import {getArtistsFailure, getArtistsRequest, getArtistsSuccess} from "./artistsActions";
 
 export const ADD_TRACK_TO_TRACK_HISTORY_REQUEST = 'ADD_TRACK_TO_TRACK_HISTORY_REQUEST';
 export const ADD_TRACK_TO_TRACK_HISTORY_SUCCESS = 'ADD_TRACK_TO_TRACK_HISTORY_SUCCESS';
@@ -48,9 +47,13 @@ export const getTrackHistory = () => {
             dispatch(getTrackHistorySuccess(response.data));
         } catch (error) {
             dispatch(getTrackHistoryFailure(error.message));
-            toast.error('Could not fetch track history!', {
-                theme: 'colored'
-            });
+            if (error.response.status === 401) {
+                toast.warning('You need login!');
+            } else {
+                toast.error('Could not fetch track history!', {
+                    theme: 'colored'
+                });
+            }
         }
     };
 };

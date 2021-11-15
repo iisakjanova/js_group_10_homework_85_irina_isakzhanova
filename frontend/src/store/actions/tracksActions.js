@@ -29,8 +29,6 @@ export const getTracks = (id) => {
                     theme: 'colored'
                 });
             }
-
-
         }
     };
 };

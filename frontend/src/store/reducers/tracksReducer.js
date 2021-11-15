@@ -7,7 +7,7 @@ import {
 const initialState = {
     tracks: null,
     fetchError: null,
-    fetchLoading: null,
+    fetchLoading: false,
 };
 
 const tracksReducer = (state = initialState, action) => {
@@ -15,7 +15,7 @@ const tracksReducer = (state = initialState, action) => {
         case GET_TRACKS_REQUEST:
             return {...state, fetchLoading: true};
         case GET_TRACKS_SUCCESS: {
-            return {...state, fetchLoading: false, tracks: action.payload};
+            return {...state, fetchLoading: false, fetchError: null, tracks: action.payload};
         }
         case GET_TRACKS_FAILURE:
             return {...state, fetchLoading: false, fetchError: action.payload};

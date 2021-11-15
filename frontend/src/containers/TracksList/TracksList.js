@@ -8,7 +8,7 @@ import Track from "../../components/Track/Track";
 import Preloader from "../../components/UI/Preloader/Preloader";
 import {addTrackToTrackHistory} from "../../store/actions/trackHistoryActions";
 
-const TracksList = ({match}) => {
+const TracksList = ({match, history}) => {
     const dispatch = useDispatch();
     const id = match.params.album;
 
@@ -21,7 +21,10 @@ const TracksList = ({match}) => {
     }, [dispatch, id]);
 
     if (!user) {
-        return <Redirect to="/login"/>
+        return <Redirect to={{
+            pathname: "/login",
+            state: {nextpath: history.location.pathname}
+        }} />
     }
 
     const handleClickTrack = (id) => {

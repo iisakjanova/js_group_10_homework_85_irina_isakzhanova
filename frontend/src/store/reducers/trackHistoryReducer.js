@@ -5,9 +5,9 @@ import {
 } from "../actions/trackHistoryActions";
 
 const initialState = {
-    tracksHistory: null,
+    trackHistory: null,
     fetchError: null,
-    fetchLoading: null,
+    fetchLoading: false,
 };
 
 const trackHistoryReducer = (state = initialState, action) => {
@@ -15,7 +15,7 @@ const trackHistoryReducer = (state = initialState, action) => {
         case GET_TRACK_HISTORY_REQUEST:
             return {...state, fetchLoading: true};
         case GET_TRACK_HISTORY_SUCCESS: {
-            return {...state, fetchLoading: false, tracksHistory: action.payload};
+            return {...state, fetchLoading: false, fetchError: null, trackHistory: action.payload};
         }
         case GET_TRACK_HISTORY_FAILURE:
             return {...state, fetchLoading: false, fetchError: action.payload};

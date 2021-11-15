@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Link as RouterLink} from 'react-router-dom';
 import {useDispatch, useSelector} from "react-redux";
 import {
@@ -12,7 +12,7 @@ import LockOpenOutlinedIcon from '@material-ui/icons/LockOpenOutlined';
 import {Alert} from "@material-ui/lab";
 
 import FormElement from "../../components/UI/FormElement/FormElement";
-import {loginUser} from "../../store/actions/usersActions";
+import {cleanUpError, loginUser} from "../../store/actions/usersActions";
 import ButtonWithProgress from "../../components/UI/ButtonWithProgress/ButtonWithProgress";
 
 const useStyles = makeStyles(theme => ({
@@ -38,7 +38,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const Login = () => {
+const Login = ({history}) => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const error = useSelector(state => state.users.loginError);
@@ -49,14 +49,18 @@ const Login = () => {
         password: '',
     });
 
+    useEffect(() => {
+        dispatch(cleanUpError());
+    }, [dispatch]);
+
     const inputChangeHandler = e => {
         const {name, value} = e.target;
         setUser(prevState => ({...prevState, [name]: value}));
     };
 
-    const submitFormHandler = e => {
+    const submitFormHandler = (e) => {
         e.preventDefault();
-        dispatch(loginUser({...user}));
+        dispatch(loginUser({...user}, history.location.state));
     };
 
     return (
